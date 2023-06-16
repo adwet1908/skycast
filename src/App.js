@@ -6,16 +6,22 @@ function App() {
   const [data , setData] = useState({});  
   const [location , setLocation] = useState('');  
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=Mumbai&appid=df32c3dad2eed17eedc5739646f29bd2`
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=df32c3dad2eed17eedc5739646f29bd2`
 
   const searchLocation=(event)=>{
-    if(event.key == "Enter"){
+    if(event.key === "Enter"){
       axios.get(url).then((response)=>{
         setData(response.data)
         console.log(response.data)
       })
       setLocation('')
     }
+  }
+
+
+  let temperature; 
+  if (data.main && data.main.temp) {
+  temperature = Math.floor(data.main.temp) - 273;
   }
 
    return (
@@ -31,10 +37,10 @@ function App() {
       <div className="container">
         <div className="top">
           <div className="location">
-            <p>Mumbai</p>
+            <p>{data.name}</p>
           </div>
           <div className="temp">
-              <h1>34°C</h1>
+              <h1>{temperature}°C</h1>
           </div>
           <div className="description">
             <p>Clouds</p>
